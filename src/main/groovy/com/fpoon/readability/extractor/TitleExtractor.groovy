@@ -1,6 +1,7 @@
 package com.fpoon.readability.extractor
 
 import com.fpoon.readability.resource.Article
+import org.jsoup.select.Elements
 
 /**
  * Extracts title from article
@@ -28,6 +29,7 @@ class TitleExtractor extends Extractor {
     }
 
     private def getH1(Article article) {
-        return article.document.getElementsByTag('H1').get(0)?.text()
+        Elements els =  article.document.getElementsByTag('h1')
+        return els.size()? els.get(0).text() : null
     }
 }

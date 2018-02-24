@@ -27,4 +27,16 @@ class ArticleExtractorTest extends Specification {
         1 * ex1.doExtract(_)
         1 * ex2.doExtract(_)
     }
+
+    def "can go through whole stack"() {
+        given:
+        def article = new Article(new URL('http://spockframework.org/spock/docs/1.1/spock_primer.html'))
+        def ex = new ArticleExtractor()
+
+        when:
+        def res = ex.extract(article);
+
+        then:
+        res != null
+    }
 }
