@@ -29,6 +29,7 @@ class Article extends WebResource {
      */
     Article(URL url) {
         this(url.text)
+        this.source = url
     }
 
     /**

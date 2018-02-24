@@ -7,13 +7,17 @@ class ArticleTest extends Specification {
     /**
      * this test requires internet connection
      */
-    def "can read some data from #url"() {
-        expect:
-            def article = new Article(new URL(url))
+    def "can read some data from #address"() {
+        when:
+            def url = new URL(address)
+            def article = new Article(url)
+
+        then:
+            article.source == url
             article.input.contains(phrase)
 
         where:
-            url                         || phrase
+            address                     || phrase
             'https://google.pl'         || 'html'
             'https://github.com'        || 'html'
     }
