@@ -1,6 +1,8 @@
 package com.fpoon.readability.resource
 
 import groovy.transform.Canonical
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 
 /**
  * Class to hold all article related data
@@ -24,6 +26,11 @@ class Article extends WebResource {
     String output;
 
     /**
+     * Input parsed by JSoup
+     */
+    Document inputDocument;
+
+    /**
      * Creates article from content downloaded from URL
      * @param url to download data
      */
@@ -38,5 +45,6 @@ class Article extends WebResource {
      */
     Article(String input) {
         this.input = input
+        inputDocument = Jsoup.parse(this.input);
     }
 }
