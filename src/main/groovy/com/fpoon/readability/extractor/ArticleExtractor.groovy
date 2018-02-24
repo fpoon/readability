@@ -18,6 +18,7 @@ class ArticleExtractor extends Extractor {
         this
                 .link(new TitleExtractor())
                 .link(new PageExtractor())
+                .link(new StripUnlikelyExtractor())
                 .link(new ContentExtractor())
     }
 
