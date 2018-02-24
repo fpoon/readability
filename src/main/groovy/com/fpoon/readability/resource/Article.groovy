@@ -16,6 +16,11 @@ class Article extends WebResource {
     Map<String, WebResource> resources = [:]
 
     /**
+     * Article title
+     */
+    String title;
+
+    /**
      * Raw input data from page
      */
     String input;
@@ -28,7 +33,7 @@ class Article extends WebResource {
     /**
      * Input parsed by JSoup
      */
-    Document inputDocument;
+    Document document;
 
     /**
      * Creates article from content downloaded from URL
@@ -45,6 +50,6 @@ class Article extends WebResource {
      */
     Article(String input) {
         this.input = input
-        inputDocument = Jsoup.parse(this.input);
+        document = Jsoup.parse(this.input);
     }
 }

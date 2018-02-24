@@ -13,6 +13,7 @@ class ArticleExtractorTest extends Specification {
         ex2.doExtract(_) >> { args -> args[0] }
 
         def extractor = new ArticleExtractor()
+        extractor.next = null
         def param = new Article('')
 
         when:
