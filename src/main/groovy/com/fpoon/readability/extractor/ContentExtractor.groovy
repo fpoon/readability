@@ -1,8 +1,10 @@
-package com.fpoon.readability.extractor;
+package com.fpoon.readability.extractor
 
 import com.fpoon.readability.resource.Article
 import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Element
+import org.jsoup.nodes.Node
+import org.jsoup.select.NodeVisitor
 
 /**
  * Extracts content from article
@@ -12,10 +14,10 @@ class ContentExtractor extends Extractor {
     Article doExtract(Article article) {
         Document doc = article.document
 
-        def nodes = fillNodes(article) // Map to hold score for each element
+        def nodes = scoreNodes(article) // Map to hold score for each element
 
         nodes.keySet().each {n ->
-            scoreElement(n, nodes)
+            println "${n.nodeName()}: ${nodes[n]}"
         }
 
         def max = nodes.keySet().max { nodes[it] }
@@ -25,12 +27,25 @@ class ContentExtractor extends Extractor {
         return article;
     }
 
-    def fillNodes(Article article) {
+    def scoreNodes(Article article) {
         def nodes = [:]
 
-        article.document.body().allElements.each {
-            nodes[it] = null
-        }
+        article.document.body().traverse(new NodeVisitor() {
+            @Override
+            void head(Node node, int i) {
+                if (node instanceof Element) {
+                    println "${" " * i}entering ${node.nodeName()}"
+                    scoreElement((Element) node, nodes);
+                }
+            }
+
+            @Override
+            void tail(Node node, int i) {
+                if (node instanceof Element) {
+                    println "${" " * i}exiting ${node.nodeName()}"
+                }
+            }
+        })
 
         return nodes
     }
