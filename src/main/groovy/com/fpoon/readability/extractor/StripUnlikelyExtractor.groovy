@@ -9,7 +9,7 @@ import org.jsoup.select.Elements
  */
 class StripUnlikelyExtractor extends Extractor {
 
-    String unlikely = /^.*\b(combx|comment|community|disqus|content|extra|foot|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup|tweet|twitter)\b.*$/
+    String unlikely = /^.*\b(combx|comment|community|disqus|extra|foot|header|menu|remark|rss|shoutbox|sidebar|sponsor|ad-break|agegate|pagination|pager|popup|tweet|twitter)\b.*$/
 
     String skipped = /^.*\b(body|pre|panel-content|panel-header)\b.*$/
 

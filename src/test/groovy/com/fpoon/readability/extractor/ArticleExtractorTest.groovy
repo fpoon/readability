@@ -30,7 +30,7 @@ class ArticleExtractorTest extends Specification {
 
     def "can go through whole stack"() {
         given:
-        def article = new Article(new URL('http://spockframework.org/spock/docs/1.1/spock_primer.html'))
+        def article = new Article(new URL(address))
         def ex = new ArticleExtractor()
 
         when:
@@ -38,5 +38,10 @@ class ArticleExtractorTest extends Specification {
 
         then:
         res != null
+
+        where:
+        address || data
+        'http://spockframework.org/spock/docs/1.1/spock_primer.html' || null
+        'https://spring.io/blog/2018/02/22/spring-for-apache-kafka-2-1-3-spring-integration-kafka-3-0-2-are-available' || null
     }
 }
