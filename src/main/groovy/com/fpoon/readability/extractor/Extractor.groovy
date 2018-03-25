@@ -23,7 +23,7 @@ abstract class Extractor {
      * @return article transformed by all extractors beneath current
      */
     Article extract(Article article) {
-        println("Calling extractor: ${this.class.name}")
+        System.err << "Calling extractor: ${this.class.name}\n"
         Article art = this.doExtract(article)
 
         art = next?.extract(article) ?: art

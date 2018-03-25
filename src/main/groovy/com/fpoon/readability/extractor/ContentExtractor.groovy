@@ -20,9 +20,11 @@ class ContentExtractor extends Extractor {
 //            println "${n.nodeName()}: ${nodes[n]}"
 //        }
 
-        def max = nodes.keySet().max { nodes[it] }
+        Element max = nodes.keySet().max { nodes[it] }
 
-        println "Most likely candidate (score ${nodes[max]}):\n\n${max}"
+//        println "Most likely candidate (score ${nodes[max]}):\n\n${max}"
+
+        article.output = max.html()
 
         return article;
     }

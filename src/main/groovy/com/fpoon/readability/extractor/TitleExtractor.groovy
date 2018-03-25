@@ -13,7 +13,7 @@ class TitleExtractor extends Extractor {
                 getH1(article) ?:                     // If there is none, try to find H1 tag
                 getDocumentTitle(article)             // As last resort get page title
 
-        println "Found title: ${title}"
+        System.err << "Found title: ${title}\n"
 
         article.title = title;
 
