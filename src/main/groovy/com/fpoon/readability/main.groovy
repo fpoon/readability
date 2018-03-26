@@ -6,6 +6,10 @@ import com.fpoon.readability.resource.Article
 import groovyx.net.http.*
 @Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.1' )
 import groovyx.net.http.*
+@Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.1' )
+import groovyx.net.http.*
+@Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.7.1' )
+import groovyx.net.http.*
 import org.jsoup.Jsoup
 
 import static groovyx.net.http.ContentType.JSON
@@ -45,8 +49,10 @@ getFeedsList().each {
         if (!it.title)
             return
 
-        if (pubsUrl.contains(it.link))
+        if (pubsUrl.contains(it.link)) {
+            println "Already published ${it.title} | ${it.link} | Skipping..."
             return
+        }
 
         Article article = new Article(it.link.toURL())
         extractor.extract(article)
@@ -56,10 +62,10 @@ getFeedsList().each {
         def bodyMap = [title: "${it.title}".toString(), content: "${article.output}".toString(), url: "${it.link}".toString()]
         def path = "/forum/${forumId}/thread/bot"
         def http = new HTTPBuilder("${url}")
-        http.auth.basic(user, password)
         http.request(POST, JSON) {
             uri.path = path
             body = bodyMap
+            headers.'Authorization' = "Basic ${token}"
             response.success = {resp -> println "Article published"}
             response.failure = {
                 resp -> println "Failed! ${resp.responseBase}"
@@ -86,7 +92,7 @@ def getFeedsList() {
         row.forumId = td[1].text()
         row.link = td[2].text()
 
-        println row
+//        println row
 
         feeds += row
     }
@@ -114,10 +120,10 @@ def getPublishedList(forumId) {
         row.title = td[3].text()
         row.createDate = td[4].text()
 
-        println row
+//        println row
 
-        feeds += row
-        println it
+        pubs += row
+//        println it
     }
 
     return pubs
