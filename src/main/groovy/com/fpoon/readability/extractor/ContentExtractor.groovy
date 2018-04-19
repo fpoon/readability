@@ -60,9 +60,9 @@ class ContentExtractor extends Extractor {
 
         score += getBaseScore(e)
 
-        score += e.text().count(',')
+        score += e.ownText().count(',')
 
-        score += Math.min((int) (e.text().size() / 100), 3)
+        score += Math.min((int) (e.ownText().size() / 100), 3)
 
         nodes[e] = score
 
@@ -79,7 +79,7 @@ class ContentExtractor extends Extractor {
 
     def getBaseScore(Element e) {
         switch (e.nodeName().toLowerCase()) {
-            case 'div':
+            case ['p','div']:
                 return 5
             case ['pre','td','blockquote']:
                 return 3

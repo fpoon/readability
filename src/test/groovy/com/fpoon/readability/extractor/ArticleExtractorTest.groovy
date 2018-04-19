@@ -35,6 +35,8 @@ class ArticleExtractorTest extends Specification {
 
         when:
         def res = ex.extract(article);
+//        println res.title
+//        println res.output
 
         then:
         res != null
