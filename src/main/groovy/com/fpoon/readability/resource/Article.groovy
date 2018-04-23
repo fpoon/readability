@@ -40,7 +40,9 @@ class Article extends WebResource {
      * @param url to download data
      */
     Article(URL url) {
-        this(url.text)
+        url = findRealUrl(url)
+        this.input = url.text
+        document = Jsoup.parse(this.input)
         this.source = url
     }
 
@@ -51,5 +53,19 @@ class Article extends WebResource {
     Article(String input) {
         this.input = input
         document = Jsoup.parse(this.input);
+    }
+
+    URL findRealUrl(URL url) {
+        HttpURLConnection conn = url.openConnection()
+        conn.followRedirects = false
+        conn.requestMethod = 'HEAD'
+        if(conn.responseCode in [301,302]) {
+            if (conn.headerFields.'Location') {
+                return findRealUrl(conn.headerFields.Location.first().toURL())
+            } else {
+                throw new RuntimeException('Failed to follow redirect')
+            }
+        }
+        return url
     }
 }
